@@ -5,7 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 const Nav = () => {
-  const isLoggedIn = true;
+  const { data: session } = useSession();
+  console.log(session?.user);
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
   useEffect(() => {
@@ -28,21 +29,20 @@ const Nav = () => {
       </Link>
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
-        {isLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
               Create Post
             </Link>
-            <button type="button" className="outline_btn">
+            <button
+              onClick={() => signOut()}
+              type="button"
+              className="outline_btn"
+            >
               Sign out
             </button>
             <Link href="/profile">
-              <Image
-                src="/assets/images/logo.png"
-                width={37}
-                height={37}
-                alt=""
-              />
+              <Image src={session?.user?.image} width={37} height={37} alt="" />
             </Link>
           </div>
         ) : (
@@ -64,10 +64,10 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-        {isLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
-              src="/assets/images/logo.png"
+              src={session?.user?.image}
               width={37}
               height={37}
               alt=""
@@ -93,7 +93,11 @@ const Nav = () => {
                 >
                   Create Post
                 </Link>
-                <button type="button" className="black_btn mt-5 w-full">
+                <button
+                  onClick={() => signOut()}
+                  type="button"
+                  className="black_btn mt-5 w-full"
+                >
                   Sign out
                 </button>
               </div>
