@@ -12,7 +12,6 @@ const CreatePost = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("hello")
     setSubmitting(true);
 
     if (!session) {
@@ -49,7 +48,7 @@ const CreatePost = () => {
 
   return (
     <Form
-      type={"new"}
+      type={"create"}
       post={post}
       setPost={setPost}
       submitting={submitting}

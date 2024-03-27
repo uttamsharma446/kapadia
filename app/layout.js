@@ -1,5 +1,6 @@
 import Nav from "@/components/Nav";
 import Provider from "@/components/Provider";
+import { Toaster } from "react-hot-toast";
 import "@/styles/globals.css";
 export const metadata = {
   title: "Kapadia",
@@ -9,6 +10,7 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body>
+      <Toaster position="bottom-center" />
         <Provider>
           <div className="main">
             <div className="gradient" />

@@ -36,8 +36,18 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           <Link href="/" className="text-gray-500 text-sm outline_btn">
             Cancel
           </Link>
-          <button className="px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white" disabled={submitting} type="submit">
-            {submitting ? "Creating your post..." : "Post"}
+          <button
+            className="px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white"
+            disabled={submitting}
+            type="submit"
+          >
+            {type === "create"
+              ? submitting
+                ? "Creating your post..."
+                : "Post"
+              : submitting
+              ? "Updating your post..."
+              : "Update"}
           </button>
         </div>
       </form>
