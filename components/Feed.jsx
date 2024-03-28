@@ -20,24 +20,43 @@ const Feed = () => {
     setSearchText(value);
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    console.log("ehii")
+    getPosts(searchText);
+  };
+
+  const getPosts = async (searchValue = "") => {
+    let url = "/api/post/";
+    if (searchValue) {
+      url = "/api/post/?q=" + searchValue;
+    }
+    const response = await fetch(url);
+    const data = await response.json();
+    setPosts(data);
+  };
   useEffect(() => {
     (async () => {
-      const response = await fetch("api/post");
-      const data = await response.json();
-      setPosts(data);
+      getPosts();
     })();
   }, []);
 
   return (
     <section>
-      <form className="relative w-full flex-center mt-10">
+      <form
+        onSubmit={handleSearchSubmit}
+        className="relative w-full flex-center mt-10"
+      >
         <input
           type="text"
           placeholder="Search for tag or a username"
           value={searchText}
           onChange={handleSearchText}
           className="search_input peer"
-        ></input>
+        />
+        <button className="hidden" type="submit">
+          Search
+        </button>
       </form>
       <PromptCardList data={posts} onTagClick={() => {}}></PromptCardList>
     </section>
